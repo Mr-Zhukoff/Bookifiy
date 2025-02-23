@@ -1,3 +1,3 @@
 ﻿namespace Bookify.Domain.Users;
 
-public record Email();
+public sealed record Email(string Value);
