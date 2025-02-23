@@ -47,4 +47,3 @@ public class PricingService
         return new PricingDetails(priceForPeriod, apartment.CleaningFee, amenitiesUpCharge, totalPrice);
     }
 }
-
