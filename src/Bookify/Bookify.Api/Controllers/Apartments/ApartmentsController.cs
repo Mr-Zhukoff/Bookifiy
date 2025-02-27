@@ -2,7 +2,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Bookify.Api.Controllers;
+namespace Bookify.Api.Controllers.Apartments;
 
 [Route("api/apartments")]
 [ApiController]
