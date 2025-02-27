@@ -1,6 +1,7 @@
 ﻿using Bogus;
 using Bookify.Application.Abstractions.Data;
 using Bookify.Domain.Apartments;
+using Dapper;
 using System.Data;
 
 namespace Bookify.Api.Extensions;
@@ -38,23 +39,12 @@ internal static class SeedDataExtensions
             });
         }
 
-        const string query = """
+        const string sql = """
             INSERT INTO public.apartments
             (id, "name", description, address_country, address_state, address_zip_code, address_city, address_street, price_amount, price_currency, cleaning_fee_amount, cleaning_fee_currency, amenities, last_booked_on_utc)
             VALUES(@Id, @Name, @Description, @Country, @State, @ZipCode, @City, @Street, @PriceAmount, @PriceCurrency, @CleaningFeeAmount, @CleaningFeeCurrency, @Amenities, @LastBookedOn);
             """;
 
-        using (var command = connection.CreateCommand())
-        {
-            command.CommandText = query;
-            command.CommandType = CommandType.Text;
-
-            connection.Open();
-
-            command.ExecuteNonQuery();
-
-            connection.Close();
-
-        }
+        connection.Execute(sql, apartments);
     }
 }
