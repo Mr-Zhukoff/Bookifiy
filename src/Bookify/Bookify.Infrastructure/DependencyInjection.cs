@@ -7,15 +7,20 @@ using Bookify.Domain.Apartments;
 using Bookify.Domain.Bookings;
 using Bookify.Domain.Users;
 using Bookify.Infrastructure.Authentication;
+using Bookify.Infrastructure.Authorization;
 using Bookify.Infrastructure.Clock;
 using Bookify.Infrastructure.Data;
 using Bookify.Infrastructure.Email;
 using Bookify.Infrastructure.Repositories;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using AuthenticationOptions = Bookify.Infrastructure.Authentication.AuthenticationOptions;
+using AuthenticationService = Bookify.Infrastructure.Authentication.AuthenticationService;
+using IAuthenticationService = Bookify.Application.Abstractions.Authentication.IAuthenticationService;
 
 namespace Bookify.Infrastructure;
 
@@ -30,6 +35,8 @@ public static class DependencyInjection
         AddPersistence(services, configuration);
 
         AddAuthentication(services, configuration);
+
+        AddAuthorization(services);
 
         return services;
     }
@@ -65,7 +72,7 @@ public static class DependencyInjection
 
         services.AddHttpContextAccessor();
 
-        //services.AddScoped<IUserContext, UserContext>();
+        services.AddScoped<IUserContext, UserContext>();
     }
 
     private static void AddPersistence(IServiceCollection services, IConfiguration configuration)
@@ -89,5 +96,16 @@ public static class DependencyInjection
         services.AddScoped<IApplicationDbContext>(sp => sp.GetRequiredService<ApplicationDbContext>());
 
         services.AddSingleton<ISqlConnectionFactory>(_ => new SqlConnectionFactory(connectionString));
+    }
+
+    private static void AddAuthorization(IServiceCollection services)
+    {
+        services.AddScoped<AuthorizationService>();
+
+        services.AddTransient<IClaimsTransformation, CustomClaimsTransformation>();
+
+        //services.AddTransient<IAuthorizationHandler, PermissionAuthorizationHandler>();
+
+        //services.AddTransient<IAuthorizationPolicyProvider, PermissionAuthorizationPolicyProvider>();
     }
 }
