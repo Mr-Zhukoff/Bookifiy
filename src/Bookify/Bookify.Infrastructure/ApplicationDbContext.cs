@@ -32,10 +32,12 @@ public sealed class ApplicationDbContext : DbContext, IUnitOfWork, IApplicationD
 
     public ApplicationDbContext(
         DbContextOptions options,
-        IDateTimeProvider dateTimeProvider)
+        IDateTimeProvider dateTimeProvider,
+        IPublisher publisher)
         : base(options)
     {
         _dateTimeProvider = dateTimeProvider;
+        _publisher = publisher;
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
