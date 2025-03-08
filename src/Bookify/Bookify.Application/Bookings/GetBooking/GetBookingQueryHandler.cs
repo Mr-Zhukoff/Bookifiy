@@ -1,4 +1,5 @@
-﻿using Bookify.Application.Abstractions.Data;
+﻿using Bookify.Application.Abstractions.Authentication;
+using Bookify.Application.Abstractions.Data;
 using Bookify.Application.Abstractions.Messaging;
 using Bookify.Domain.Abstractions;
 using Bookify.Domain.Bookings;
@@ -9,10 +10,13 @@ namespace Bookify.Application.Bookings.GetBooking;
 internal sealed class GetBookingQueryHandler : IQueryHandler<GetBookingQuery, BookingResponse>
 {
     private readonly IApplicationDbContext _context;
+    private readonly IUserContext _userContext;
 
-    public GetBookingQueryHandler(IApplicationDbContext context)
+    public GetBookingQueryHandler(IApplicationDbContext context, IUserContext userContext)
     {
         _context = context;
+        _userContext = userContext;
+
     }
 
     public async Task<Result<BookingResponse>> Handle(GetBookingQuery request, CancellationToken cancellationToken)
@@ -39,7 +43,7 @@ internal sealed class GetBookingQueryHandler : IQueryHandler<GetBookingQuery, Bo
             })
             .FirstOrDefaultAsync(cancellationToken);
 
-        if (booking is null)
+        if (booking is null || booking.UserId != _userContext.UserId)
         {
             return Result.Failure<BookingResponse>(BookingErrors.NotFound);
         }
