@@ -1,0 +1,330 @@
+{
+	"info": {
+		"_postman_id": "03c04847-eba4-40c4-ba33-786a30d66eab",
+		"name": "Bokify",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2482108",
+		"_collection_link": "https://zhukoff-5467.postman.co/workspace/OTUS~c27f666f-b9d2-4d5b-9ced-c380e10f33bd/collection/2482108-03c04847-eba4-40c4-ba33-786a30d66eab?action=share&source=collection_link&creator=2482108"
+	},
+	"item": [
+		{
+			"name": "Register user",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"User1Email\", pm.variables.replaceIn('{{$randomEmail}}'));\r",
+							"pm.collectionVariables.set(\"User1Password\", pm.variables.replaceIn('{{$randomPassword}}'));\r",
+							"pm.collectionVariables.set(\"User1FirstName\", pm.variables.replaceIn('{{$randomFirstName}}'));\r",
+							"pm.collectionVariables.set(\"User1LastName\", pm.variables.replaceIn('{{$randomLastName}}'));"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"console.log(pm.collectionVariables.get(\"User1Email\"));\r",
+							"console.log(pm.collectionVariables.get(\"User1Password\"));\r",
+							"\r",
+							"let result = pm.response.json();\r",
+							"pm.collectionVariables.set(\"User1Id\", result);\r",
+							"\r",
+							"console.log(pm.collectionVariables.get(\"User1Id\"));\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"{{User1Email}}\",\r\n  \"firstName\": \"{{User1FirstName}}\",\r\n  \"lastName\": \"{{User1LastName}}\",\r\n  \"password\": \"{{User1Password}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{api_url}}/api/users/register",
+					"host": [
+						"{{api_url}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login user",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let responseData = pm.response.json();\r",
+							"pm.collectionVariables.set(\"User1Token\", responseData.accessToken);\r",
+							"console.log(pm.collectionVariables.get(\"User1Token\"));\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"{{User1Email}}\",\r\n  \"password\": \"{{User1Password}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{api_url}}/api/users/login",
+					"host": [
+						"{{api_url}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get user info",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let responseData = pm.response.json();\r",
+							"pm.collectionVariables.set(\"User1Token\", responseData.accessToken);\r",
+							"console.log(pm.collectionVariables.get(\"User1Token\"));\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true,
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{User1Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"{{User1Email}}\",\r\n  \"password\": \"{{User1Password}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{api_url}}/api/users/me",
+					"host": [
+						"{{api_url}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"me"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User1 access token from Keycloak",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "client_id",
+							"value": "bookify-auth-client",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "3E3yvXaYppoYBF3Ir6DgtEzADKKzSurZ",
+							"type": "text"
+						},
+						{
+							"key": "scope",
+							"value": "openid",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "{{User1Email}}",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "{{User1Password}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:18080/realms/bookify/protocol/openid-connect/token",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "18080",
+					"path": [
+						"realms",
+						"bookify",
+						"protocol",
+						"openid-connect",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Apartments search",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{api_url}}/api/apartments?startDate=07-20-2023&endDate=07-31-2023",
+					"host": [
+						"{{api_url}}"
+					],
+					"path": [
+						"api",
+						"apartments"
+					],
+					"query": [
+						{
+							"key": "startDate",
+							"value": "07-20-2023"
+						},
+						{
+							"key": "endDate",
+							"value": "07-31-2023"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "api_url",
+			"value": "https://localhost:62565",
+			"type": "default"
+		},
+		{
+			"key": "User1Email",
+			"value": ""
+		},
+		{
+			"key": "User1Password",
+			"value": ""
+		},
+		{
+			"key": "User1FirstName",
+			"value": ""
+		},
+		{
+			"key": "User1LastName",
+			"value": ""
+		},
+		{
+			"key": "User1Id",
+			"value": ""
+		},
+		{
+			"key": "User1Token",
+			"value": ""
+		}
+	]
+}
