@@ -111,12 +111,13 @@
 					"raw": "{\r\n  \"email\": \"{{User1Email}}\",\r\n  \"firstName\": \"{{User1FirstName}}\",\r\n  \"lastName\": \"{{User1LastName}}\",\r\n  \"password\": \"{{User1Password}}\"\r\n}"
 				},
 				"url": {
-					"raw": "{{api_url}}/api/users/register",
+					"raw": "{{api_url}}/api/v1/users/register",
 					"host": [
 						"{{api_url}}"
 					],
 					"path": [
 						"api",
+						"v1",
 						"users",
 						"register"
 					]
@@ -172,12 +173,13 @@
 					"raw": "{\r\n  \"email\": \"{{User1Email}}\",\r\n  \"password\": \"{{User1Password}}\"\r\n}"
 				},
 				"url": {
-					"raw": "{{api_url}}/api/users/login",
+					"raw": "{{api_url}}/api/v1/users/login",
 					"host": [
 						"{{api_url}}"
 					],
 					"path": [
 						"api",
+						"v1",
 						"users",
 						"login"
 					]
@@ -243,12 +245,13 @@
 					"raw": "{\r\n  \"email\": \"{{User1Email}}\",\r\n  \"password\": \"{{User1Password}}\"\r\n}"
 				},
 				"url": {
-					"raw": "{{api_url}}/api/users/me",
+					"raw": "{{api_url}}/api/v1/users/me",
 					"host": [
 						"{{api_url}}"
 					],
 					"path": [
 						"api",
+						"v1",
 						"users",
 						"me"
 					]
@@ -286,12 +289,13 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{api_url}}/api/apartments?startDate=07-20-2023&endDate=07-31-2023",
+					"raw": "{{api_url}}/api/v1/apartments?startDate=07-20-2023&endDate=07-31-2023",
 					"host": [
 						"{{api_url}}"
 					],
 					"path": [
 						"api",
+						"v1",
 						"apartments"
 					],
 					"query": [
@@ -352,12 +356,13 @@
 					}
 				},
 				"url": {
-					"raw": "{{api_url}}/api/bookings",
+					"raw": "{{api_url}}/api/v1/bookings",
 					"host": [
 						"{{api_url}}"
 					],
 					"path": [
 						"api",
+						"v1",
 						"bookings"
 					]
 				}
@@ -394,12 +399,13 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{api_url}}/api/bookings?id=057b27c9-e085-4817-86bb-ca6788568e6c",
+					"raw": "{{api_url}}/api/v1/bookings?id=057b27c9-e085-4817-86bb-ca6788568e6c",
 					"host": [
 						"{{api_url}}"
 					],
 					"path": [
 						"api",
+						"v1",
 						"bookings"
 					],
 					"query": [
