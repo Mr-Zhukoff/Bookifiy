@@ -63,7 +63,7 @@ internal sealed class ReserveBookingCommandHandler : ICommandHandler<ReserveBook
                 user.Id,
                 duration,
                 _dateTimeProvider.UtcNow,
-                _pricingService.CalculatePrice(apartment, duration));
+                _pricingService);
 
             _bookingRepository.Add(booking);
 
