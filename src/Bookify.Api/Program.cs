@@ -38,7 +38,7 @@ if (app.Environment.IsDevelopment())
 
     app.ApplyMigrations();
     // REMARK: Uncomment to seed initial data
-    // app.SeedData();
+    app.SeedData();
 }
 
 app.UseHttpsRedirection();

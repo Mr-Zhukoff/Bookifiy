@@ -3,7 +3,7 @@ services:
     image: ${DOCKER_REGISTRY-}bookifyapi
     build:
       context: .
-      dockerfile: Bookify.Api/Dockerfile
+      dockerfile: src/Bookify.Api/Dockerfile
     depends_on:
       - bookify-db
 
@@ -28,7 +28,7 @@ services:
       - KEYCLOAK_ADMIN_PASSWORD=admin
     volumes:
       - ./.containers/identity:/opt/keycloak/data
-#      - ./.files/bookify-realm-export.json:/opt/keycloak/data/import/realm.json
+      - ./.files/bookify-realm-export.json:/opt/keycloak/data/import/realm.json
     ports:
       - 18080:8080
 
